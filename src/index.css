@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #120E0A;
+  --text: #FFFFFF;
+  --muted: #A69C8C;
+  --accent: #E8A33D;
+  --accent-text: #1B1407;
+  --card: #1C1712;
+  --line: #2E281F;
+  --soft: #241D16;
+  --display: 'Playfair Display', Georgia, serif;
+  --body: Inter, system-ui, sans-serif;
+}
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-bg text-fg antialiased font-sans; }
+  :focus-visible { @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 h-11 text-sm font-semibold whitespace-nowrap
+      transition-[background-color,color,transform,opacity] duration-150 active:scale-[0.98] disabled:opacity-50;
+  }
+  .btn-accent { @apply btn bg-accent text-on-accent hover:opacity-90; }
+  .btn-line { @apply btn border border-line text-fg hover:bg-soft; }
+  .btn-gold { @apply btn bg-gold text-[#1b1407] hover:bg-gold-light; }
+  .wrap { @apply max-w-6xl mx-auto px-5 sm:px-8; }
+  .field {
+    @apply w-full h-12 rounded-xl border border-line bg-card px-4 text-[15px] text-fg outline-none focus:border-accent placeholder:text-muted;
+  }
+  .chip { @apply inline-flex items-center rounded-full border border-line bg-soft px-3 py-1 text-xs font-medium text-fg; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.2em] text-accent; }
+}
+
+/* Article text */
+.prose-blog { font-family: var(--body); font-size: 18px; line-height: 1.75; }
+.prose-blog p + p { margin-top: 1.1em; }
+.prose-blog strong { font-weight: 700; color: var(--text); }
+.prose-blog code.inline {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.85em; padding: 0.1em 0.4em; border-radius: 6px; background: var(--soft);
+}
+
+/* Print only the recipe card when "Print recipe" is used */
+@media print {
+  @page { margin: 14mm; }
+  body { background: #fff !important; color: #111 !important; }
+  .no-print { display: none !important; }
+  body.print-recipe * { visibility: hidden; }
+  body.print-recipe .recipe-card, body.print-recipe .recipe-card * { visibility: visible; }
+  body.print-recipe .recipe-card { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none !important; border: none !important; }
+}
